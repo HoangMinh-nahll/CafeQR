@@ -42,7 +42,7 @@ public class AdminController {
     public record StaffRequest(@NotBlank String username, @NotBlank String password, @NotBlank String fullName) {}
     public record MenuItemRequest(@NotNull Long categoryId, @NotBlank String itemName,
                                   String description, @NotBlank String variantName,
-                                  @NotNull BigDecimal price, Boolean available) {}
+                                  @NotNull BigDecimal price, Boolean available, String imageUrl) {}
     public record VariantUpdateRequest(@NotNull BigDecimal price, @NotNull Boolean available) {}
     public record ToppingUpdateRequest(@NotNull BigDecimal additionalPrice, @NotNull Boolean available) {}
     public record CreateToppingRequest(@NotBlank String toppingName, @NotNull BigDecimal additionalPrice, Boolean available) {}
@@ -116,6 +116,23 @@ public class AdminController {
         return jdbc.queryForList("SELECT category_id AS \"categoryId\", category_name AS \"categoryName\" FROM menu_categories ORDER BY category_id");
     }
 
+    @PostMapping("/categories")
+    public Map<String, Object> createCategory(@RequestBody Map<String, String> body, HttpSession session) {
+        SessionGuard.requireRole(session, "MANAGER");
+        String name = body != null ? body.get("categoryName") : null;
+        if (name == null || name.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tên danh mục không được để trống.");
+        }
+        try {
+            Long catId = jdbc.queryForObject(
+                    "INSERT INTO menu_categories(category_name) VALUES (?) RETURNING category_id",
+                    Long.class, name.trim());
+            return Map.of("success", true, "categoryId", catId, "message", "Đã thêm danh mục mới.");
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Danh mục này đã tồn tại.");
+        }
+    }
+
     @GetMapping("/menu")
     public List<Map<String, Object>> getMenu(HttpSession session) {
         SessionGuard.requireRole(session, "MANAGER");
@@ -157,8 +174,8 @@ public class AdminController {
         }
         try {
             Long itemId = jdbc.queryForObject(
-                    "INSERT INTO menu_items(category_id, item_name, description, is_available) VALUES (?, ?, ?, TRUE) RETURNING item_id",
-                    Long.class, request.categoryId(), request.itemName().trim(), request.description());
+                    "INSERT INTO menu_items(category_id, item_name, description, is_available, image_url) VALUES (?, ?, ?, TRUE, ?) RETURNING item_id",
+                    Long.class, request.categoryId(), request.itemName().trim(), request.description(), request.imageUrl());
             boolean available = request.available() != null ? request.available() : request.price().compareTo(BigDecimal.ZERO) > 0;
             if (available && request.price().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sản phẩm đang bán phải có giá lớn hơn 0.");

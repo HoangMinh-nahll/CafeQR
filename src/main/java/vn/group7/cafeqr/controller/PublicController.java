@@ -54,18 +54,22 @@ public class PublicController {
                 item.put("variants", jdbc.queryForList(
                         "SELECT variant_id AS \"variantId\", variant_name AS \"variantName\", price FROM menu_item_variants WHERE item_id = ? AND is_available = TRUE AND price > 0 ORDER BY variant_id",
                         itemId));
-                List<Map<String, Object>> toppings = jdbc.queryForList(
-                        """
-                        SELECT t.topping_id AS \"toppingId\", t.topping_name AS \"toppingName\", t.additional_price AS \"additionalPrice\", t.is_available AS \"isAvailable\"
-                        FROM toppings t JOIN menu_item_toppings mit ON mit.topping_id = t.topping_id
-                        WHERE mit.item_id = ? AND t.is_available = TRUE ORDER BY t.topping_name
-                        """, itemId);
-                if (toppings.isEmpty()) {
+                List<Map<String, Object>> toppings = Collections.emptyList();
+                String catLower = (category.get("categoryName") != null) ? category.get("categoryName").toString().toLowerCase() : "";
+                if (!catLower.equals("snacks") && !catLower.contains("snack") && !catLower.contains("food") && !catLower.contains("ăn")) {
                     toppings = jdbc.queryForList(
                             """
                             SELECT t.topping_id AS \"toppingId\", t.topping_name AS \"toppingName\", t.additional_price AS \"additionalPrice\", t.is_available AS \"isAvailable\"
-                            FROM toppings t WHERE t.is_available = TRUE ORDER BY t.topping_name
-                            """);
+                            FROM toppings t JOIN menu_item_toppings mit ON mit.topping_id = t.topping_id
+                            WHERE mit.item_id = ? AND t.is_available = TRUE ORDER BY t.topping_name
+                            """, itemId);
+                    if (toppings.isEmpty()) {
+                        toppings = jdbc.queryForList(
+                                """
+                                SELECT t.topping_id AS \"toppingId\", t.topping_name AS \"toppingName\", t.additional_price AS \"additionalPrice\", t.is_available AS \"isAvailable\"
+                                FROM toppings t WHERE t.is_available = TRUE ORDER BY t.topping_name
+                                """);
+                    }
                 }
                 item.put("toppings", toppings);
             }

@@ -630,13 +630,14 @@ async function loadHistoryOrders(targetDate) {
   }
 }
 
-async function loadCategories() {
+async function loadCategories(selectedId = null) {
   const select = document.getElementById('itemCategory');
   if (!select) return;
   const categories = await CafeApp.api('/api/admin/categories');
   select.innerHTML = categories.map(c => `<option value="${c.categoryId}">${CafeApp.escape(c.categoryName)}</option>`).join('');
-  const snacks = categories.find(c => c.categoryName.toLowerCase() === 'snacks');
-  if (snacks) select.value = snacks.categoryId;
+  if (selectedId) {
+    select.value = selectedId;
+  }
 }
 
 let cachedAdminCategories = [];
@@ -742,7 +743,7 @@ function renderAdminMenu() {
                   ${(item.variants || []).map(v => `
                     <div class="variant-edit-row">
                       <span>${CafeApp.escape(v.variantName)}</span>
-                      <input type="number" min="0" step="500" value="${v.price}" id="variant-price-${v.variantId}">
+                      <input type="number" min="0" step="any" value="${v.price}" id="variant-price-${v.variantId}">
                       <label><input type="checkbox" id="variant-active-${v.variantId}" ${v.isAvailable ? 'checked' : ''}> Bán</label>
                       <button class="btn btn-small btn-secondary save-variant" data-id="${v.variantId}"><i class="fa-solid fa-check"></i> Lưu giá</button>
                     </div>
@@ -1039,6 +1040,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const itemForm = document.getElementById('itemForm');
   if (itemForm) {
+    const quickAddCatBtn = document.getElementById('btnQuickAddCategory');
+    if (quickAddCatBtn) {
+      quickAddCatBtn.addEventListener('click', async () => {
+        const name = prompt('Nhập tên danh mục mới muốn tạo (ví dụ: Món ăn, Bánh ngọt, Đồ ăn vặt, Trà đặc biệt...):');
+        if (!name || !name.trim()) return;
+        try {
+          const res = await CafeApp.api('/api/admin/categories', {
+            method: 'POST',
+            body: { categoryName: name.trim() }
+          });
+          showAdminToast(`Đã thêm danh mục mới: ${name.trim()}`);
+          await loadCategories(res.categoryId);
+        } catch (err) {
+          alert(err.message || 'Lỗi khi tạo danh mục.');
+        }
+      });
+    }
+
     itemForm.addEventListener('submit', async event => {
       event.preventDefault();
       const message = document.getElementById('itemMessage');
@@ -1050,7 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
           description: document.getElementById('itemDescription').value.trim(),
           variantName: document.getElementById('variantName').value.trim(),
           price: Number(document.getElementById('variantPrice').value),
-          available: true
+          available: true,
+          imageUrl: newItemImageDataUrl || null
         })});
         if (newItemImageDataUrl && res && res.itemId) {
           CafeApp.setItemImage(res.itemId, itemName, newItemImageDataUrl);

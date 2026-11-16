@@ -49,15 +49,24 @@ public class AdminBootstrap {
                         System.out.println("Manager account synchronized with app.admin.password: " + username);
                     }
 
-                    // Tự động liên kết tất cả các món với toàn bộ Topping đang có
+                    // Tự động liên kết các món Đồ uống với toàn bộ Topping đang có (loại trừ đồ ăn / snacks)
                     try {
                         jdbc.update(
                                 """
                                 INSERT INTO menu_item_toppings(item_id, topping_id)
                                 SELECT mi.item_id, t.topping_id
                                 FROM menu_items mi
+                                JOIN menu_categories c ON c.category_id = mi.category_id
                                 CROSS JOIN toppings t
+                                WHERE LOWER(c.category_name) NOT IN ('snacks', 'food', 'foods', 'món ăn', 'đồ ăn')
                                 ON CONFLICT DO NOTHING
+                                """);
+                        jdbc.update(
+                                """
+                                DELETE FROM menu_item_toppings mit
+                                USING menu_items mi, menu_categories c
+                                WHERE mit.item_id = mi.item_id AND mi.category_id = c.category_id
+                                  AND LOWER(c.category_name) IN ('snacks', 'food', 'foods', 'món ăn', 'đồ ăn')
                                 """);
                     } catch (Exception e) {
                         System.err.println("Ghi chú: Chưa thể cập nhật menu_item_toppings lúc khởi động: " + e.getMessage());

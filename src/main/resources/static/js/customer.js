@@ -83,12 +83,37 @@ function getDrinkSubgroup(name) {
   return 'Sữa & Khác';
 }
 
+function getCategoryIcon(subGroup) {
+  const lower = (subGroup || '').toLowerCase();
+  if (lower.includes('cà phê')) return 'fa-mug-hot';
+  if (lower.includes('trà sữa')) return 'fa-whiskey-glass';
+  if (lower.includes('trà')) return 'fa-lemon';
+  if (lower.includes('snack') || lower.includes('bánh') || lower.includes('khoai')) return 'fa-cookie-bite';
+  if (lower.includes('food') || lower.includes('ăn') || lower.includes('món')) return 'fa-utensils';
+  return 'fa-glass-water';
+}
+
+function isFoodItem(item) {
+  const cat = (item.categoryName || '').toLowerCase();
+  const sub = (item.subGroup || '').toLowerCase();
+  const name = (item.itemName || '').toLowerCase();
+  return cat === 'snacks' || cat.includes('snack') || cat.includes('food') || cat.includes('món ăn') || cat.includes('đồ ăn') ||
+         sub === 'snacks' || sub.includes('snack') || sub.includes('food') || sub.includes('món ăn') || sub.includes('đồ ăn') ||
+         name.includes('snack') || name.includes('bánh') || name.includes('khoai tây') || name.includes('heo quay');
+}
+
 function getAllItemsList() {
   let list = [];
   menuCategories.forEach(cat => {
     (cat.items || []).forEach(item => {
-      const sub = cat.categoryName === 'Đồ uống' ? getDrinkSubgroup(item.itemName) : cat.categoryName;
-      list.push({ ...item, categoryName: cat.categoryName, subGroup: sub });
+      let sub;
+      const catName = cat.categoryName || '';
+      if (catName.toLowerCase() === 'đồ uống') {
+        sub = getDrinkSubgroup(item.itemName);
+      } else {
+        sub = catName;
+      }
+      list.push({ ...item, categoryName: catName, subGroup: sub });
     });
   });
   return list;
@@ -106,13 +131,18 @@ function renderMenu(fullReset = false) {
 
   const allItemsList = getAllItemsList();
 
-  const counts = {
-    ALL: allItemsList.length,
-    'Cà phê': allItemsList.filter(i => i.subGroup === 'Cà phê').length,
-    'Trà sữa': allItemsList.filter(i => i.subGroup === 'Trà sữa').length,
-    'Trà trái cây': allItemsList.filter(i => i.subGroup === 'Trà trái cây').length,
-    'Sữa & Khác': allItemsList.filter(i => i.subGroup === 'Sữa & Khác').length
-  };
+  // Tạo danh sách các tab linh hoạt theo toàn bộ danh mục thực tế
+  const subGroupNames = [];
+  allItemsList.forEach(item => {
+    if (item.subGroup && !subGroupNames.includes(item.subGroup)) {
+      subGroupNames.push(item.subGroup);
+    }
+  });
+
+  const counts = { ALL: allItemsList.length };
+  subGroupNames.forEach(sg => {
+    counts[sg] = allItemsList.filter(i => i.subGroup === sg).length;
+  });
 
   let displayedItems = allItemsList;
   if (currentCategoryFilter !== 'ALL') {
@@ -137,7 +167,7 @@ function renderMenu(fullReset = false) {
         </div>
 
         <div class="menu-tabs" id="cafeTabsContainer">
-          ${renderTabButtons(counts)}
+          ${renderTabButtons(counts, subGroupNames)}
         </div>
       </div>
 
@@ -172,7 +202,7 @@ function renderMenu(fullReset = false) {
     }
     const tabsContainer = document.getElementById('cafeTabsContainer');
     if (tabsContainer) {
-      tabsContainer.innerHTML = renderTabButtons(counts);
+      tabsContainer.innerHTML = renderTabButtons(counts, subGroupNames);
       bindTabEvents();
     }
     const clearBtn = document.getElementById('clearSearchBtn');
@@ -184,16 +214,26 @@ function renderMenu(fullReset = false) {
   }
 }
 
-function renderTabButtons(counts) {
-  return `
+function renderTabButtons(counts, subGroupNames = []) {
+  let html = `
     <button type="button" class="menu-tab-btn ${currentCategoryFilter === 'ALL' ? 'active' : ''}" data-sub="ALL">
-      Tất cả <span class="tab-count">${counts.ALL}</span>
+      Tất cả <span class="tab-count">${counts.ALL || 0}</span>
     </button>
-    ${counts['Cà phê'] ? `<button type="button" class="menu-tab-btn ${currentCategoryFilter === 'Cà phê' ? 'active' : ''}" data-sub="Cà phê"><i class="fa-solid fa-mug-hot"></i> Cà phê <span class="tab-count">${counts['Cà phê']}</span></button>` : ''}
-    ${counts['Trà sữa'] ? `<button type="button" class="menu-tab-btn ${currentCategoryFilter === 'Trà sữa' ? 'active' : ''}" data-sub="Trà sữa"><i class="fa-solid fa-whiskey-glass"></i> Trà sữa <span class="tab-count">${counts['Trà sữa']}</span></button>` : ''}
-    ${counts['Trà trái cây'] ? `<button type="button" class="menu-tab-btn ${currentCategoryFilter === 'Trà trái cây' ? 'active' : ''}" data-sub="Trà trái cây"><i class="fa-solid fa-lemon"></i> Trà trái cây <span class="tab-count">${counts['Trà trái cây']}</span></button>` : ''}
-    ${counts['Sữa & Khác'] ? `<button type="button" class="menu-tab-btn ${currentCategoryFilter === 'Sữa & Khác' ? 'active' : ''}" data-sub="Sữa & Khác"><i class="fa-solid fa-glass-water"></i> Khác <span class="tab-count">${counts['Sữa & Khác']}</span></button>` : ''}
   `;
+
+  subGroupNames.forEach(sg => {
+    const icon = getCategoryIcon(sg);
+    const count = counts[sg] || 0;
+    if (count > 0) {
+      const displayName = sg === 'Sữa & Khác' ? 'Khác' : sg;
+      html += `
+        <button type="button" class="menu-tab-btn ${currentCategoryFilter === sg ? 'active' : ''}" data-sub="${CafeApp.escape(sg)}">
+          <i class="fa-solid ${icon}"></i> ${CafeApp.escape(displayName)} <span class="tab-count">${count}</span>
+        </button>
+      `;
+    }
+  });
+  return html;
 }
 
 function renderProductList(items) {
@@ -215,8 +255,10 @@ function renderProductList(items) {
 function renderDishRow(item) {
   const variants = item.variants || [];
   // Lấy danh sách topping cho món: ưu tiên item.toppings hoặc fallback toàn bộ topping quán đang bán
-  const rawToppings = (item.toppings && item.toppings.length > 0) ? item.toppings : allStoreToppings;
-  const availableToppings = rawToppings.filter(t => {
+  const isFood = isFoodItem(item);
+  // Đồ ăn / Snacks TUYỆT ĐỐI KHÔNG có topping
+  const rawToppings = (!isFood && item.toppings && item.toppings.length > 0) ? item.toppings : (isFood ? [] : allStoreToppings);
+  const availableToppings = isFood ? [] : rawToppings.filter(t => {
     const isAvail = (t.isAvailable !== undefined) ? t.isAvailable : ((t.isavailable !== undefined) ? t.isavailable : true);
     return isAvail !== false && isAvail !== 'false' && isAvail !== 0;
   });
