@@ -188,16 +188,12 @@ function renderOrderDetail(order) {
     <article class="order-invoice-card">
       <!-- HEADER PHIẾU HÓA ĐƠN -->
       <div class="invoice-header">
-        <div class="invoice-brand">
-          <div class="brand-mark" style="width: 44px; height: 44px;">
-            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="46" fill="#f7efe5" stroke="#d9c3ad" stroke-width="2"/>
-              <circle cx="50" cy="50" r="23" fill="#3d1f0d"/>
-              <path d="M 50 45 C 50 45, 46 40, 43 40 C 39.5 40, 38 42.5, 38 45.5 C 38 49.5, 43 53.5, 50 58 C 57 53.5, 62 49.5, 62 45.5 C 62 42.5, 60.5 40, 57 40 C 54 40, 50 45, 50 45 Z" fill="#fff9f2"/>
-            </svg>
+                <div class="invoice-brand">
+          <div class="brand-mark" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; padding: 1px; border: 1.5px solid #d9c3ad;">
+            <img src="/images/logo.png" alt="QR Cà Phê Tây Nguyên" class="brand-logo-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">
           </div>
           <div>
-            <h2 class="invoice-brand-title">CAFE QR ORDERING</h2>
+            <h2 class="invoice-brand-title">QR CÀ PHÊ TÂY NGUYÊN</h2>
             <p class="muted" style="margin: 0; font-size: 13px;">Phiếu thanh toán & Chi tiết đặt món tại bàn</p>
           </div>
         </div>
