@@ -1,8 +1,5 @@
 # CAFE QR ORDERING WEBSITE – GROUP 7
 
-Bộ source code mới, thống nhất cho website đặt món tại quán cà phê bằng QR Code.
-
-- Website, không phải native mobile app.
 - Frontend: HTML, CSS, JavaScript (được Spring Boot phục vụ cùng domain).
 - Backend: Java 17 + Spring Boot 3.5.16 + JDBC.
 - Database: Neon PostgreSQL.
