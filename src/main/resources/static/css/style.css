@@ -5592,7 +5592,7 @@ textarea:focus {
    MOBILE RESPONSIVE OPTIMIZATION (TỐI ƯU HÓA GIAO DIỆN ĐIỆN THOẠI DI ĐỘNG)
    Dành cho cả trang Khách hàng (index.html) và trang Quản trị (Admin / History)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 920px) {
   /* 1. KHUNG TRANG & HEADER CHUNG */
   .page-shell,
   .wide-shell {
