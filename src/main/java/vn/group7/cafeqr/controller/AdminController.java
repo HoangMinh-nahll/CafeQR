@@ -124,7 +124,7 @@ public class AdminController {
         for (Map<String, Object> category : categories) {
             long categoryId = ((Number) category.get("categoryId")).longValue();
             List<Map<String, Object>> items = jdbc.queryForList(
-                    "SELECT item_id AS \"itemId\", item_name AS \"itemName\", COALESCE(description,'') AS description, is_available AS \"isAvailable\" FROM menu_items WHERE category_id = ? ORDER BY item_name",
+                    "SELECT item_id AS \"itemId\", item_name AS \"itemName\", COALESCE(description,'') AS description, is_available AS \"isAvailable\", image_url AS \"imageUrl\" FROM menu_items WHERE category_id = ? ORDER BY item_name",
                     categoryId);
             for (Map<String, Object> item : items) {
                 long itemId = ((Number) item.get("itemId")).longValue();
@@ -196,6 +196,20 @@ public class AdminController {
         int changed = jdbc.update("UPDATE menu_items SET is_available = ? WHERE item_id = ?", request.available(), itemId);
         if (changed == 0) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy sản phẩm.");
         return Map.of("success", true);
+    }
+
+    @PutMapping("/menu-items/{itemId}/image")
+    public Map<String, Object> updateMenuItemImage(@PathVariable long itemId,
+                                                   @RequestBody Map<String, String> body,
+                                                   HttpSession session) {
+        SessionGuard.requireRole(session, "MANAGER");
+        String imageUrl = (body != null) ? body.get("imageUrl") : null;
+        if (imageUrl != null && imageUrl.trim().isEmpty()) {
+            imageUrl = null;
+        }
+        int changed = jdbc.update("UPDATE menu_items SET image_url = ? WHERE item_id = ?", imageUrl, itemId);
+        if (changed == 0) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy sản phẩm.");
+        return Map.of("success", true, "message", "Đã cập nhật ảnh món thành công.");
     }
 
     @PutMapping("/variants/{variantId}")

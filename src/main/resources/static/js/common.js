@@ -93,26 +93,26 @@ window.CafeApp = {
   FALLBACK_SNACK_IMG: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none"><rect width="160" height="160" rx="20" fill="%23fdf5eb"/><circle cx="80" cy="80" r="48" fill="%23f0dfc8"/><path d="M52 90c0-16 12-28 28-28s28 12 28 28H52z" fill="%23d49354"/><circle cx="70" cy="80" r="3" fill="%233d2314"/><circle cx="90" cy="80" r="3" fill="%233d2314"/><circle cx="80" cy="72" r="3" fill="%233d2314"/></svg>',
 
   DEFAULT_DRINK_IMAGES: {
-    'bac-xiu': 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80',
-    'ca-phe-sua-da': 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=300&q=80',
-    'ca-phe-den-da': 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=300&q=80',
-    'ca-phe-muoi': 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=300&q=80',
-    'tra-sua': 'https://images.unsplash.com/photo-1558857563-b37cfb8813a4?auto=format&fit=crop&w=300&q=80',
-    'tra-sua-thai-xanh': 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=300&q=80',
-    'tra-sua-o-long-trung-nuong': 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=300&q=80',
-    'tra-sua-truyen-thong': 'https://images.unsplash.com/photo-1525385133512-2f3bdd039054?auto=format&fit=crop&w=300&q=80',
-    'tra-sua-dua-nuong': 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=300&q=80',
-    'tra-dao': 'https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=300&q=80',
-    'tra-luu': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=300&q=80',
-    'tra-mang-cau': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80',
-    'tra-nhiet-doi': 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=300&q=80',
-    'tra-da-me': 'https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=300&q=80',
-    'tra-tac': 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80',
-    'tra-oi-hong': 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=300&q=80',
-    'tra-dau-tam': 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=300&q=80',
-    'sua-chua-da-bao': 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=300&q=80',
-    'sua-bap': 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80',
-    'sua-dau-nanh': 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=300&q=80'
+    'bac-xiu': '/images/drinks/bac-xiu.jpg?v=20261116_v9',
+    'ca-phe-sua-da': '/images/drinks/ca-phe-sua-da.jpg?v=20261116_v9',
+    'ca-phe-den-da': '/images/drinks/ca-phe-den-da.jpg?v=20261116_v9',
+    'ca-phe-muoi': '/images/drinks/ca-phe-muoi.jpg?v=20261116_v9',
+    'tra-sua': '/images/drinks/tra-sua.jpg?v=20261116_v9',
+    'tra-sua-thai-xanh': '/images/drinks/tra-sua-thai-xanh.jpg?v=20261116_v9',
+    'tra-sua-o-long-trung-nuong': '/images/drinks/tra-sua-o-long-trung-nuong.jpg?v=20261116_v9',
+    'tra-sua-truyen-thong': '/images/drinks/tra-sua-truyen-thong.jpg?v=20261116_v9',
+    'tra-sua-dua-nuong': '/images/drinks/tra-sua-dua-nuong.jpg?v=20261116_v9',
+    'tra-dao': '/images/drinks/tra-dao.jpg?v=20261116_v9',
+    'tra-luu': '/images/drinks/tra-luu.jpg?v=20261116_v9',
+    'tra-mang-cau': '/images/drinks/tra-mang-cau.jpg?v=20261116_v9',
+    'tra-nhiet-doi': '/images/drinks/tra-nhiet-doi.jpg?v=20261116_v9',
+    'tra-da-me': '/images/drinks/tra-da-me.jpg?v=20261116_v9',
+    'tra-tac': '/images/drinks/tra-tac.jpg?v=20261116_v9',
+    'tra-oi-hong': '/images/drinks/tra-oi-hong.jpg?v=20261116_v9',
+    'tra-dau-tam': '/images/drinks/tra-dau-tam.jpg?v=20261116_v9',
+    'sua-chua-da-bao': '/images/drinks/sua-chua-da-bao.jpg?v=20261116_v9',
+    'sua-bap': '/images/drinks/sua-bap.jpg?v=20261116_v9',
+    'sua-dau-nanh': '/images/drinks/sua-dau-nanh.jpg?v=20261116_v9'
   },
 
   getItemImage(item) {
@@ -121,21 +121,21 @@ window.CafeApp = {
     const name = item.itemName || '';
     const slug = this.slugify(name);
 
-    // 1. Kiểm tra ảnh tùy chỉnh do Admin tải lên trong localStorage theo ID
+    // 1. Nếu item có image_url trả về từ server (đồng bộ mọi thiết bị máy tính + điện thoại)
+    if (item.imageUrl || item.image_url) {
+      return item.imageUrl || item.image_url;
+    }
+    // 2. Kiểm tra ảnh tùy chỉnh do Admin tải lên trong localStorage theo ID
     if (id) {
       const customById = localStorage.getItem('cafeqr_item_img_' + id);
       if (customById) return customById;
     }
-    // 2. Kiểm tra ảnh tùy chỉnh theo slug tên món
+    // 3. Kiểm tra ảnh tùy chỉnh theo slug tên món
     if (slug) {
       const customBySlug = localStorage.getItem('cafeqr_item_img_slug_' + slug);
       if (customBySlug) return customBySlug;
     }
-    // 3. Nếu item có image_url trả về từ server
-    if (item.imageUrl || item.image_url) {
-      return item.imageUrl || item.image_url;
-    }
-    // 4. Kiểm tra ảnh mẫu theo slug chính xác
+    // 4. Kiểm tra ảnh mặc định cục bộ theo slug chính xác
     if (this.DEFAULT_DRINK_IMAGES && this.DEFAULT_DRINK_IMAGES[slug]) {
       return this.DEFAULT_DRINK_IMAGES[slug];
     }
@@ -144,7 +144,7 @@ window.CafeApp = {
       return this.DEFAULT_DRINK_IMAGES['ca-phe-sua-da'];
     }
     if (slug.includes('tra-sua')) {
-      return this.DEFAULT_DRINK_IMAGES['tra-sua-truyen-thong'];
+      return this.DEFAULT_DRINK_IMAGES['tra-sua'];
     }
     if (slug.includes('tra')) {
       return this.DEFAULT_DRINK_IMAGES['tra-dao'];

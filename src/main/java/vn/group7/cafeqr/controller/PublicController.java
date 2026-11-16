@@ -42,7 +42,7 @@ public class PublicController {
             long categoryId = ((Number) category.get("categoryId")).longValue();
             List<Map<String, Object>> items = jdbc.queryForList(
                     """
-                    SELECT mi.item_id AS \"itemId\", mi.item_name AS \"itemName\", COALESCE(mi.description, '') AS description
+                    SELECT mi.item_id AS \"itemId\", mi.item_name AS \"itemName\", COALESCE(mi.description, '') AS description, mi.image_url AS \"imageUrl\"
                     FROM menu_items mi
                     WHERE mi.category_id = ? AND mi.is_available = TRUE
                       AND EXISTS (SELECT 1 FROM menu_item_variants v WHERE v.item_id = mi.item_id AND v.is_available = TRUE AND v.price > 0)

@@ -763,7 +763,7 @@ function renderAdminMenu() {
   container.querySelectorAll('.save-item').forEach(button => button.addEventListener('click', () => saveItem(Number(button.dataset.id))));
   container.querySelectorAll('.item-active').forEach(input => input.addEventListener('change', () => saveItemAvailability(Number(input.dataset.itemId), input.checked)));
 
-  // Gắn sự kiện Tải ảnh món
+  // Gắn sự kiện Tải ảnh món (Đồng bộ cả localStorage và Database để hiện trên điện thoại)
   container.querySelectorAll('.manage-file-input').forEach(input => {
     input.addEventListener('change', async (e) => {
       const file = e.target.files[0];
@@ -773,6 +773,15 @@ function renderAdminMenu() {
       try {
         const compressed = await CafeApp.compressImage(file, 300, 0.82);
         CafeApp.setItemImage(itemId, itemName, compressed);
+        // Lưu vào Database để mọi thiết bị (kể cả điện thoại) đều thấy ảnh mới ngay lập tức
+        try {
+          await CafeApp.api(`/api/admin/menu-items/${itemId}/image`, {
+            method: 'PUT',
+            body: { imageUrl: compressed }
+          });
+        } catch (apiErr) {
+          console.warn('Lưu ảnh vào database thất bại, dùng tạm localStorage:', apiErr);
+        }
         showAdminToast(`Đã lưu ảnh mới cho món: ${itemName}`);
         renderAdminMenu();
       } catch (err) {
@@ -783,10 +792,18 @@ function renderAdminMenu() {
 
   // Gắn sự kiện Khôi phục ảnh gốc
   container.querySelectorAll('.btn-reset-photo').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const itemId = Number(btn.dataset.itemId);
       const itemName = btn.dataset.itemName;
       CafeApp.resetItemImage(itemId, itemName);
+      try {
+        await CafeApp.api(`/api/admin/menu-items/${itemId}/image`, {
+          method: 'PUT',
+          body: { imageUrl: '' }
+        });
+      } catch (apiErr) {
+        console.warn('Xóa ảnh trên server thất bại:', apiErr);
+      }
       showAdminToast(`Đã khôi phục ảnh mặc định cho: ${itemName}`);
       renderAdminMenu();
     });
