@@ -189,8 +189,8 @@ function renderOrderDetail(order) {
       <!-- HEADER PHIẾU HÓA ĐƠN -->
       <div class="invoice-header">
                 <div class="invoice-brand">
-          <div class="brand-mark" style="width: 48px; height: 48px; border-radius: 50%; overflow: hidden; padding: 1px; border: 1.5px solid #d9c3ad;">
-            <img src="/images/logo.png" alt="QR Cà Phê Tây Nguyên" class="brand-logo-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">
+          <div class="brand-mark" style="width: auto; height: 44px; border-radius: 8px; overflow: hidden; padding: 0; border: 1px solid #d9c3ad; background: #2b170e;">
+            <img src="/images/logo.png?v=20261116_v7" alt="QR Cà Phê Tây Nguyên" class="brand-logo-img" style="height: 44px; width: auto; max-width: 140px; object-fit: contain; display: block; border-radius: 8px;">
           </div>
           <div>
             <h2 class="invoice-brand-title">QR CÀ PHÊ TÂY NGUYÊN</h2>
