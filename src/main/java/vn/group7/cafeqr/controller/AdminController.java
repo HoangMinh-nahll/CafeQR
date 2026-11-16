@@ -113,7 +113,20 @@ public class AdminController {
     @GetMapping("/categories")
     public List<Map<String, Object>> getCategories(HttpSession session) {
         SessionGuard.requireRole(session, "MANAGER");
-        return jdbc.queryForList("SELECT category_id AS \"categoryId\", category_name AS \"categoryName\" FROM menu_categories ORDER BY category_id");
+        return jdbc.queryForList("""
+                SELECT category_id AS "categoryId", category_name AS "categoryName" 
+                FROM menu_categories 
+                ORDER BY 
+                  CASE 
+                    WHEN LOWER(category_name) = 'cà phê' THEN 1
+                    WHEN LOWER(category_name) = 'trà sữa' THEN 2
+                    WHEN LOWER(category_name) = 'trà trái cây' THEN 3
+                    WHEN LOWER(category_name) = 'khác' THEN 4
+                    WHEN LOWER(category_name) = 'snacks' THEN 5
+                    ELSE 10 
+                  END, 
+                  category_id
+                """);
     }
 
     @PostMapping("/categories")
@@ -136,8 +149,20 @@ public class AdminController {
     @GetMapping("/menu")
     public List<Map<String, Object>> getMenu(HttpSession session) {
         SessionGuard.requireRole(session, "MANAGER");
-        List<Map<String, Object>> categories = jdbc.queryForList(
-                "SELECT category_id AS \"categoryId\", category_name AS \"categoryName\" FROM menu_categories ORDER BY category_id");
+        List<Map<String, Object>> categories = jdbc.queryForList("""
+                SELECT category_id AS "categoryId", category_name AS "categoryName" 
+                FROM menu_categories 
+                ORDER BY 
+                  CASE 
+                    WHEN LOWER(category_name) = 'cà phê' THEN 1
+                    WHEN LOWER(category_name) = 'trà sữa' THEN 2
+                    WHEN LOWER(category_name) = 'trà trái cây' THEN 3
+                    WHEN LOWER(category_name) = 'khác' THEN 4
+                    WHEN LOWER(category_name) = 'snacks' THEN 5
+                    ELSE 10 
+                  END, 
+                  category_id
+                """);
         for (Map<String, Object> category : categories) {
             long categoryId = ((Number) category.get("categoryId")).longValue();
             List<Map<String, Object>> items = jdbc.queryForList(

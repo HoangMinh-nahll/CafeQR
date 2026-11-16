@@ -35,14 +35,26 @@ public class PublicController {
     @GetMapping("/menu")
     public Map<String, Object> getMenu(@RequestParam String token) {
         Map<String, Object> table = resolveTable(token);
-        List<Map<String, Object>> categories = jdbc.queryForList(
-                "SELECT category_id AS \"categoryId\", category_name AS \"categoryName\" FROM menu_categories ORDER BY category_id");
+        List<Map<String, Object>> categories = jdbc.queryForList("""
+                SELECT category_id AS "categoryId", category_name AS "categoryName" 
+                FROM menu_categories 
+                ORDER BY 
+                  CASE 
+                    WHEN LOWER(category_name) = 'cà phê' THEN 1
+                    WHEN LOWER(category_name) = 'trà sữa' THEN 2
+                    WHEN LOWER(category_name) = 'trà trái cây' THEN 3
+                    WHEN LOWER(category_name) = 'khác' THEN 4
+                    WHEN LOWER(category_name) = 'snacks' THEN 5
+                    ELSE 10 
+                  END, 
+                  category_id
+                """);
 
         for (Map<String, Object> category : categories) {
             long categoryId = ((Number) category.get("categoryId")).longValue();
             List<Map<String, Object>> items = jdbc.queryForList(
                     """
-                    SELECT mi.item_id AS \"itemId\", mi.item_name AS \"itemName\", COALESCE(mi.description, '') AS description, mi.image_url AS \"imageUrl\"
+                    SELECT mi.item_id AS "itemId", mi.item_name AS "itemName", COALESCE(mi.description, '') AS description, mi.image_url AS "imageUrl"
                     FROM menu_items mi
                     WHERE mi.category_id = ? AND mi.is_available = TRUE
                       AND EXISTS (SELECT 1 FROM menu_item_variants v WHERE v.item_id = mi.item_id AND v.is_available = TRUE AND v.price > 0)
@@ -56,7 +68,7 @@ public class PublicController {
                         itemId));
                 List<Map<String, Object>> toppings = Collections.emptyList();
                 String catLower = (category.get("categoryName") != null) ? category.get("categoryName").toString().toLowerCase() : "";
-                if (!catLower.equals("snacks") && !catLower.contains("snack") && !catLower.contains("food") && !catLower.contains("ăn")) {
+                if (!catLower.equals("snacks") && !catLower.contains("snack") && !catLower.contains("food") && !catLower.contains("ăn") && !catLower.contains("bánh")) {
                     toppings = jdbc.queryForList(
                             """
                             SELECT t.topping_id AS \"toppingId\", t.topping_name AS \"toppingName\", t.additional_price AS \"additionalPrice\", t.is_available AS \"isAvailable\"

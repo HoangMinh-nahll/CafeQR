@@ -1080,9 +1080,10 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
       const message = document.getElementById('itemMessage');
       const itemName = document.getElementById('itemName').value.trim();
+      const currentCatVal = document.getElementById('itemCategory').value;
       try {
         const res = await CafeApp.api('/api/admin/menu-items', { method: 'POST', body: JSON.stringify({
-          categoryId: Number(document.getElementById('itemCategory').value),
+          categoryId: Number(currentCatVal),
           itemName: itemName,
           description: document.getElementById('itemDescription').value.trim(),
           variantName: document.getElementById('variantName').value.trim(),
@@ -1109,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (clearNewItemImgBtn) clearNewItemImgBtn.classList.add('hidden');
 
         showAdminToast(`Đã thêm món: ${itemName}`);
-        await loadCategories(); 
+        await loadCategories(currentCatVal); 
         await loadMenu();
       } catch (error) { message.textContent = error.message; message.className = 'form-message error-message'; }
     });

@@ -80,7 +80,7 @@ function getDrinkSubgroup(name) {
   if (lower.includes('cà phê') || lower.includes('bạc xỉu')) return 'Cà phê';
   if (lower.includes('trà sữa')) return 'Trà sữa';
   if (lower.includes('trà ')) return 'Trà trái cây';
-  return 'Sữa & Khác';
+  return 'Khác';
 }
 
 function getCategoryIcon(subGroup) {
@@ -90,30 +90,29 @@ function getCategoryIcon(subGroup) {
   if (lower.includes('trà')) return 'fa-lemon';
   if (lower.includes('snack') || lower.includes('bánh') || lower.includes('khoai')) return 'fa-cookie-bite';
   if (lower.includes('food') || lower.includes('ăn') || lower.includes('món')) return 'fa-utensils';
-  return 'fa-glass-water';
+  if (lower.includes('khác')) return 'fa-glass-water';
+  return 'fa-layer-group';
 }
 
 function isFoodItem(item) {
   const cat = (item.categoryName || '').toLowerCase();
   const sub = (item.subGroup || '').toLowerCase();
   const name = (item.itemName || '').toLowerCase();
-  return cat === 'snacks' || cat.includes('snack') || cat.includes('food') || cat.includes('món ăn') || cat.includes('đồ ăn') ||
-         sub === 'snacks' || sub.includes('snack') || sub.includes('food') || sub.includes('món ăn') || sub.includes('đồ ăn') ||
+  return cat === 'snacks' || cat.includes('snack') || cat.includes('food') || cat.includes('món ăn') || cat.includes('đồ ăn') || cat.includes('bánh') ||
+         sub === 'snacks' || sub.includes('snack') || sub.includes('food') || sub.includes('món ăn') || sub.includes('đồ ăn') || sub.includes('bánh') ||
          name.includes('snack') || name.includes('bánh') || name.includes('khoai tây') || name.includes('heo quay');
 }
 
 function getAllItemsList() {
   let list = [];
   menuCategories.forEach(cat => {
+    const catName = (cat.categoryName || '').trim();
     (cat.items || []).forEach(item => {
-      let sub;
-      const catName = cat.categoryName || '';
+      let sub = catName;
       if (catName.toLowerCase() === 'đồ uống') {
         sub = getDrinkSubgroup(item.itemName);
-      } else {
-        sub = catName;
       }
-      list.push({ ...item, categoryName: catName, subGroup: sub });
+      list.push({ ...item, categoryId: cat.categoryId, categoryName: sub, subGroup: sub });
     });
   });
   return list;
@@ -225,10 +224,9 @@ function renderTabButtons(counts, subGroupNames = []) {
     const icon = getCategoryIcon(sg);
     const count = counts[sg] || 0;
     if (count > 0) {
-      const displayName = sg === 'Sữa & Khác' ? 'Khác' : sg;
       html += `
         <button type="button" class="menu-tab-btn ${currentCategoryFilter === sg ? 'active' : ''}" data-sub="${CafeApp.escape(sg)}">
-          <i class="fa-solid ${icon}"></i> ${CafeApp.escape(displayName)} <span class="tab-count">${count}</span>
+          <i class="fa-solid ${icon}"></i> ${CafeApp.escape(sg)} <span class="tab-count">${count}</span>
         </button>
       `;
     }
