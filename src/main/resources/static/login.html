@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập · Cafe QR Ordering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261115_04">
+  <script src="/js/common.js?v=20261115_04" defer></script>
+  <script src="/js/login.js?v=20261115_04" defer></script>
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <a class="back-link" href="/">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Về trang khách hàng</span>
+    </a>
+    <div class="login-icon">
+      <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="loginSaucerGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#faf6f0"/>
+            <stop offset="75%" stop-color="#ecdccb"/>
+            <stop offset="100%" stop-color="#d9c3ad"/>
+          </radialGradient>
+          <radialGradient id="loginCremaGrad" cx="45%" cy="45%" r="50%">
+            <stop offset="0%" stop-color="#d49354"/>
+            <stop offset="55%" stop-color="#a8622c"/>
+            <stop offset="100%" stop-color="#3d1f0d"/>
+          </radialGradient>
+          <linearGradient id="loginRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#eddccb"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="url(#loginSaucerGrad)" stroke="#d9c3ad" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" fill="none" stroke="#cbb39c" stroke-width="1" opacity="0.6"/>
+        <path d="M 72 44 C 85 44, 85 56, 72 56" fill="none" stroke="#e6d4c1" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="27" fill="url(#loginRimGrad)" stroke="#cbb39c" stroke-width="1"/>
+        <circle cx="50" cy="50" r="23" fill="#3d1f0d"/>
+        <circle cx="50" cy="50" r="22" fill="url(#loginCremaGrad)"/>
+        <path d="M 50 45 C 50 45, 46 40, 43 40 C 39.5 40, 38 42.5, 38 45.5 C 38 49.5, 43 53.5, 50 58 C 57 53.5, 62 49.5, 62 45.5 C 62 42.5, 60.5 40, 57 40 C 54 40, 50 45, 50 45 Z" fill="#fff9f2" opacity="0.9"/>
+      </svg>
+    </div>
+    <p class="eyebrow center">CAFE QR ORDERING</p>
+    <h1 class="center">Đăng nhập</h1>
+    <p class="muted center">Dành cho Manager và Staff</p>
+    <form id="loginForm" class="form-stack">
+      <label class="field-label" for="username">Tên đăng nhập</label>
+      <input id="username" name="username" autocomplete="username" required maxlength="100" placeholder="Nhập username">
+      <label class="field-label" for="password">Mật khẩu</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Nhập mật khẩu">
+      <button class="btn btn-primary btn-full" type="submit" style="margin-top: 14px;"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</button>
+      <p id="loginMessage" class="form-message center" aria-live="polite"></p>
+    </form>
+  </main>
+</body>
+</html>

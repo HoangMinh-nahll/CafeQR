@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chi tiết đơn hàng · Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261115_08">
+  <script src="/js/common.js?v=20261115_08" defer></script>
+  <script src="/js/order-detail.js?v=20261115_08" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="/admin.html">
+    <span class="brand-mark">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="saucerGradDetail" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#faf6f0"/>
+            <stop offset="75%" stop-color="#ecdccb"/>
+            <stop offset="100%" stop-color="#d9c3ad"/>
+          </radialGradient>
+          <radialGradient id="cremaGradDetail" cx="45%" cy="45%" r="50%">
+            <stop offset="0%" stop-color="#d49354"/>
+            <stop offset="55%" stop-color="#a8622c"/>
+            <stop offset="100%" stop-color="#3d1f0d"/>
+          </radialGradient>
+          <linearGradient id="rimGradDetail" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#eddccb"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="url(#saucerGradDetail)" stroke="#d9c3ad" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" fill="none" stroke="#cbb39c" stroke-width="1" opacity="0.6"/>
+        <path d="M 72 44 C 85 44, 85 56, 72 56" fill="none" stroke="#e6d4c1" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="27" fill="url(#rimGradDetail)" stroke="#cbb39c" stroke-width="1"/>
+        <circle cx="50" cy="50" r="23" fill="#3d1f0d"/>
+        <circle cx="50" cy="50" r="22" fill="url(#cremaGradDetail)"/>
+        <path d="M 50 45 C 50 45, 46 40, 43 40 C 39.5 40, 38 42.5, 38 45.5 C 38 49.5, 43 53.5, 50 58 C 57 53.5, 62 49.5, 62 45.5 C 62 42.5, 60.5 40, 57 40 C 54 40, 50 45, 50 45 Z" fill="#fff9f2" opacity="0.9"/>
+      </svg>
+    </span>
+    <span>Cafe QR Ordering<small>Admin Dashboard</small></span>
+  </a>
+  <div class="header-actions">
+    <span class="user-pill"><i class="fa-solid fa-user-tie"></i> <span id="adminName">Admin</span></span>
+    <button class="btn btn-outline-light" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</button>
+  </div>
+</header>
+
+<!-- THANH MENU ĐIỀU HƯỚNG CHÍNH -->
+<nav class="admin-navbar">
+  <div class="admin-nav-menu">
+    <a href="/admin.html" class="nav-link"><i class="fa-solid fa-cubes"></i> Đơn hàng & Bàn</a>
+    <a href="/history.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn</a>
+    <a href="/menu-manage.html" class="nav-link"><i class="fa-solid fa-utensils"></i> Thực đơn món</a>
+    <a href="/toppings.html" class="nav-link"><i class="fa-solid fa-layer-group"></i> Quản lý Topping</a>
+    <a href="/staff-manage.html" class="nav-link"><i class="fa-solid fa-users-gear"></i> Tài khoản Staff</a>
+  </div>
+</nav>
+
+<main class="page-shell wide-shell">
+  <div class="order-detail-shell">
+    <div class="order-detail-nav no-print">
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <a href="/history.html" class="btn btn-secondary btn-small">
+          <i class="fa-solid fa-arrow-left"></i> Quay lại lịch sử đơn
+        </a>
+        <a href="/admin.html" class="btn btn-outline btn-small">
+          <i class="fa-solid fa-cubes"></i> Đơn hàng trực tiếp
+        </a>
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary btn-small" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> In hóa đơn
+        </button>
+      </div>
+    </div>
+
+    <!-- KHUNG HIỂN THỊ CHI TIẾT ĐƠN HÀNG VÀ HÓA ĐƠN -->
+    <div id="orderDetailContainer">
+      <div class="loading-card" style="padding: 40px; text-align: center;">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 28px; margin-bottom: 12px; color: var(--coffee-primary);"></i>
+        <p class="muted">Đang tải chi tiết đơn hàng...</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer no-print">Cafe QR Ordering Website · Chi tiết đơn hàng</footer>
+
+<!-- NÚT CUỘN LÊN ĐẦU TRANG -->
+<button type="button" id="backToTopBtn" class="back-to-top-btn" title="Cuộn lên đầu trang" aria-label="Lên đầu trang">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+</body>
+</html>

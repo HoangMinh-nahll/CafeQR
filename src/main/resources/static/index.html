@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3d2314">
+  <title>Cafe QR Ordering · Đặt món tại bàn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css?v=20261115_06">
+  <script src="/js/common.js?v=20261115_06" defer></script>
+  <script src="/js/customer.js?v=20261115_06" defer></script>
+</head>
+<body>
+
+<!-- HEADER TRANG WEB CỦA CỬA HÀNG -->
+<header class="site-header">
+  <a class="brand" href="/">
+    <span class="brand-mark">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="saucerGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#faf6f0"/>
+            <stop offset="75%" stop-color="#ecdccb"/>
+            <stop offset="100%" stop-color="#d9c3ad"/>
+          </radialGradient>
+          <radialGradient id="cremaGrad" cx="45%" cy="45%" r="50%">
+            <stop offset="0%" stop-color="#d49354"/>
+            <stop offset="55%" stop-color="#a8622c"/>
+            <stop offset="100%" stop-color="#3d1f0d"/>
+          </radialGradient>
+          <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#eddccb"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="url(#saucerGrad)" stroke="#d9c3ad" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="32" fill="none" stroke="#cbb39c" stroke-width="1" opacity="0.6"/>
+        <path d="M 72 44 C 85 44, 85 56, 72 56" fill="none" stroke="#e6d4c1" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="27" fill="url(#rimGrad)" stroke="#cbb39c" stroke-width="1"/>
+        <circle cx="50" cy="50" r="23" fill="#3d1f0d"/>
+        <circle cx="50" cy="50" r="22" fill="url(#cremaGrad)"/>
+        <path d="M 50 45 C 50 45, 46 40, 43 40 C 39.5 40, 38 42.5, 38 45.5 C 38 49.5, 43 53.5, 50 58 C 57 53.5, 62 49.5, 62 45.5 C 62 42.5, 60.5 40, 57 40 C 54 40, 50 45, 50 45 Z" fill="#fff9f2" opacity="0.9"/>
+      </svg>
+    </span>
+    <span>Cafe QR Ordering<small>Website Đặt Món Tại Bàn</small></span>
+  </a>
+  <a class="header-link" href="/login.html"><i class="fa-solid fa-user-lock"></i> Khu vực nhân viên</a>
+</header>
+
+<main class="page-shell">
+  <!-- BANNER CHÀO MỪNG CỦA QUÁN -->
+  <section class="welcome-card cafe-brand-hero">
+    <div class="welcome-main">
+      <p class="eyebrow"><i class="fa-solid fa-mug-hot"></i> COFFEE HOUSE & TEA</p>
+      <h1>Chọn món bạn yêu thích</h1>
+      <p class="muted">Các loại cà phê pha phin, trà trái cây và trà sữa được pha chế tươi mới tại quầy.</p>
+    </div>
+    <div class="table-pill" id="tableStatus">
+      <i class="fa-solid fa-spinner fa-spin"></i> Đang xác định số bàn...
+    </div>
+  </section>
+
+  <!-- BỐ CỤC 2 CỘT THỰC ĐƠN VÀ GIỎ HÀNG -->
+  <div class="customer-layout">
+    <section class="menu-area">
+      <div id="menuContent" class="menu-content">
+        <div class="loading-card"><i class="fa-solid fa-spinner fa-spin"></i> Đang tải thực đơn quán...</div>
+      </div>
+    </section>
+
+    <!-- GIỎ HÀNG CỦA BẠN (CỘT BÊN PHẢI) -->
+    <aside class="cart-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ĐƠN CỦA BẠN</p>
+          <h2>Giỏ hàng</h2>
+        </div>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+
+      <div id="cartList" class="cart-list">
+        <p class="empty-state">Bạn chưa chọn món nào.</p>
+      </div>
+
+      <label class="field-label" for="customerNote">
+        <i class="fa-regular fa-comment-dots"></i> Ghi chú cho quầy pha chế
+      </label>
+      <textarea id="customerNote" rows="3" maxlength="500" placeholder="Ví dụ: Ít đá, ít ngọt, không đường..."></textarea>
+
+      <div class="total-row">
+        <span>Tổng cộng</span>
+        <strong id="cartTotal">0 ₫</strong>
+      </div>
+
+      <button id="placeOrder" class="btn btn-primary btn-full" disabled>
+        <i class="fa-solid fa-paper-plane"></i> Gửi đơn hàng
+      </button>
+      <p class="small-note"><i class="fa-solid fa-bell"></i> Đơn sẽ được gửi trực tiếp đến quầy pha chế của quán.</p>
+
+      <div id="orderResult" class="result-box hidden" aria-live="polite"></div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">Cafe QR Ordering Website · Quán Cà Phê & Trà Trái Cây</footer>
+</body>
+</html>
