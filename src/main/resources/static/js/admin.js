@@ -1041,19 +1041,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const itemForm = document.getElementById('itemForm');
   if (itemForm) {
     const quickAddCatBtn = document.getElementById('btnQuickAddCategory');
+    const newCatInput = document.getElementById('newCategoryInput');
     if (quickAddCatBtn) {
       quickAddCatBtn.addEventListener('click', async () => {
-        const name = prompt('Nhập tên danh mục mới muốn tạo (ví dụ: Món ăn, Bánh ngọt, Đồ ăn vặt, Trà đặc biệt...):');
-        if (!name || !name.trim()) return;
+        let name = newCatInput ? newCatInput.value.trim() : '';
+        if (!name) {
+          name = prompt('Nhập tên danh mục mới muốn tạo (ví dụ: Món ăn, Bánh ngọt, Đồ ăn vặt, Trà đặc biệt...):');
+          if (name) name = name.trim();
+        }
+        if (!name) {
+          if (newCatInput) newCatInput.focus();
+          return;
+        }
         try {
           const res = await CafeApp.api('/api/admin/categories', {
             method: 'POST',
-            body: { categoryName: name.trim() }
+            body: { categoryName: name }
           });
-          showAdminToast(`Đã thêm danh mục mới: ${name.trim()}`);
+          showAdminToast(`Đã thêm danh mục mới: ${name}`);
+          if (newCatInput) newCatInput.value = '';
           await loadCategories(res.categoryId);
         } catch (err) {
           alert(err.message || 'Lỗi khi tạo danh mục.');
+        }
+      });
+    }
+
+    if (newCatInput && quickAddCatBtn) {
+      newCatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          quickAddCatBtn.click();
         }
       });
     }
@@ -1078,6 +1096,8 @@ document.addEventListener('DOMContentLoaded', () => {
         message.textContent = 'Đã thêm món mới và giá thành công.'; 
         message.className = 'form-message success-message'; 
         event.target.reset();
+        const vNameInput = document.getElementById('variantName');
+        if (vNameInput) vNameInput.value = 'Phần';
 
         // Reset preview ảnh
         newItemImageDataUrl = null;

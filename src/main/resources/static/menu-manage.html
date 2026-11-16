@@ -7,23 +7,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261117_v11">
-  <script src="/js/common.js?v=20261117_v11" defer></script>
-  <script src="/js/admin.js?v=20261117_v11" defer></script>
+  <link rel="stylesheet" href="/css/style.css?v=20261117_v12">
+  <script src="/js/common.js?v=20261117_v12" defer></script>
+  <script src="/js/admin.js?v=20261117_v12" defer></script>
   <!-- FAVICON & APP ICONS (HIỂN THỊ LOGO TRÊN ĐƯỜNG LINK & TAB TRÌNH DUYỆT) -->
-  <link rel="shortcut icon" href="/favicon.ico?v=20261117_v11">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261117_v11">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261117_v11">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261117_v11">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261117_v11">
-  <meta property="og:image" content="/images/logo-banner.png?v=20261117_v11">
+  <link rel="shortcut icon" href="/favicon.ico?v=20261117_v12">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261117_v12">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261117_v12">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261117_v12">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261117_v12">
+  <meta property="og:image" content="/images/logo-banner.png?v=20261117_v12">
   <meta property="og:title" content="QR Cà Phê Tây Nguyên">
 </head>
 <body>
 <header class="site-header">
   <a class="brand" href="/admin.html">
     <span class="brand-mark">
-      <img src="/images/logo.png?v=20261117_v11" alt="QR Cà Phê Tây Nguyên" class="brand-logo-img">
+      <img src="/images/logo.png?v=20261117_v12" alt="QR Cà Phê Tây Nguyên" class="brand-logo-img">
     </span>
     <span>QR Cà Phê Tây Nguyên<small>Admin Dashboard</small></span>
   </a>
@@ -62,35 +62,41 @@
     <p class="small-note">Chọn danh mục (Cà phê, Trà sữa, Trà trái cây, Snacks...), nhập tên món và giá bán. Bạn có thể chọn ảnh từ máy tính để ảnh hiển thị đẹp mắt trên giao diện khách hàng.</p>
     
     <form id="itemForm" class="form-stack" style="max-width: 780px;">
-      <div class="form-row">
+      <!-- HÀNG 1: CHỌN DANH MỤC ĐÃ CÓ BÊN CẠNH TẠO DANH MỤC MỚI -->
+      <div class="form-row" style="align-items: flex-end; gap: 14px;">
         <div style="flex: 1.2;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-            <label class="field-label" for="itemCategory" style="margin-bottom: 0;">Danh mục món</label>
-            <button type="button" class="btn btn-outline" id="btnQuickAddCategory" style="padding: 2px 8px; font-size: 11px;">
-              <i class="fa-solid fa-folder-plus"></i> Thêm danh mục
-            </button>
-          </div>
+          <label class="field-label" for="itemCategory"><i class="fa-solid fa-list-check"></i> Chọn danh mục đã có</label>
           <select id="itemCategory" required></select>
         </div>
-        <div style="flex: 2;">
+        <div style="flex: 1;">
+          <label class="field-label" for="newCategoryInput"><i class="fa-solid fa-folder-plus"></i> Hoặc tạo danh mục mới</label>
+          <div style="display: flex; gap: 6px;">
+            <input id="newCategoryInput" placeholder="Ví dụ: Bánh ngọt, Món ăn..." maxlength="100">
+            <button type="button" class="btn btn-primary" id="btnQuickAddCategory" style="white-space: nowrap; padding: 0 14px; font-size: 13px;">
+              <i class="fa-solid fa-plus"></i> Tạo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HÀNG 2: TÊN MÓN, KÍCH CỠ & GIÁ BÁN -->
+      <div class="form-row">
+        <div style="flex: 1.5;">
           <label class="field-label" for="itemName">Tên món</label>
           <input id="itemName" required maxlength="150" placeholder="Ví dụ: Cà phê dừa, Snack khoai tây...">
+        </div>
+        <div style="flex: 1;">
+          <label class="field-label" for="variantName">Tên lựa chọn / Kích cỡ</label>
+          <input id="variantName" required value="Phần" maxlength="30" placeholder="M, L hoặc Phần">
+        </div>
+        <div style="flex: 1;">
+          <label class="field-label" for="variantPrice">Giá bán (VNĐ)</label>
+          <input id="variantPrice" type="number" min="0" step="any" required placeholder="Ví dụ: 3000 hoặc 35000">
         </div>
       </div>
 
       <label class="field-label" for="itemDescription">Mô tả món ăn / đồ uống</label>
       <input id="itemDescription" maxlength="500" placeholder="Mô tả hương vị hoặc thành phần nổi bật (không bắt buộc)">
-
-      <div class="form-row">
-        <div>
-          <label class="field-label" for="variantName">Tên lựa chọn / Kích cỡ</label>
-          <input id="variantName" required value="Phần" maxlength="30" placeholder="M, L hoặc Phần">
-        </div>
-        <div>
-          <label class="field-label" for="variantPrice">Giá bán (VNĐ)</label>
-          <input id="variantPrice" type="number" min="0" step="any" required placeholder="Ví dụ: 3000 hoặc 35000">
-        </div>
-      </div>
       
       <!-- Upload ảnh cho món mới -->
       <label class="field-label">Hình ảnh minh họa món</label>

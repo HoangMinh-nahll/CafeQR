@@ -79,6 +79,21 @@ public class AdminBootstrap {
                         System.err.println("Ghi chú: Không thể cập nhật trạng thái topping: " + e.getMessage());
                     }
 
+                    // Khởi tạo các danh mục món cơ bản nếu chưa có
+                    try {
+                        String[] defaultCats = {"Cà phê", "Trà sữa", "Trà trái cây", "Sữa & Khác", "Snacks", "Đồ ăn", "Đồ uống"};
+                        for (String cat : defaultCats) {
+                            Long catCount = jdbc.queryForObject(
+                                    "SELECT COUNT(*) FROM menu_categories WHERE LOWER(TRIM(category_name)) = LOWER(TRIM(?))",
+                                    Long.class, cat);
+                            if (catCount == null || catCount == 0) {
+                                jdbc.update("INSERT INTO menu_categories(category_name) VALUES (?)", cat);
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Ghi chú: Không thể khởi tạo danh mục cơ bản: " + e.getMessage());
+                    }
+
                     break;
                 } catch (Exception ex) {
                     System.err.println("Thử kết nối database lần " + attempt + "/" + maxAttempts + " thất bại: " + ex.getMessage());
