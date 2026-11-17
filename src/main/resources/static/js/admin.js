@@ -208,6 +208,16 @@ function updateOrderCounts() {
   setIfExists('countPreparing', prepCount);
   setIfExists('countReady', readyCount);
   setIfExists('countAll', allCount);
+  setIfExists('floatingAdminBadge', activeCount);
+
+  const floatingBtn = document.getElementById('floatingAdminOrdersBtn');
+  if (floatingBtn) {
+    if (activeCount > 0) {
+      floatingBtn.classList.add('has-items');
+    } else {
+      floatingBtn.classList.remove('has-items');
+    }
+  }
 }
 
 function renderTableOrderDetail() {
@@ -1168,6 +1178,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnRefreshHist) {
     btnRefreshHist.addEventListener('click', () => {
       loadHistoryOrders();
+    });
+  }
+
+  // Nút nổi giỏ hàng / đơn hàng kéo xuống khu vực đơn
+  const floatingAdminBtn = document.getElementById('floatingAdminOrdersBtn');
+  if (floatingAdminBtn) {
+    floatingAdminBtn.addEventListener('click', () => {
+      const target = document.getElementById('adminOrdersSection');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   }
 

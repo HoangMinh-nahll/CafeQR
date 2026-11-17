@@ -633,6 +633,13 @@ function addProductToCartDirect(itemId, itemName, variantId, variantName, basePr
     countBadge.classList.add('badge-bounce');
     setTimeout(() => countBadge.classList.remove('badge-bounce'), 300);
   }
+
+  const floatingBtn = document.getElementById('floatingCartBtn');
+  if (floatingBtn) {
+    floatingBtn.classList.remove('bounce');
+    void floatingBtn.offsetWidth;
+    floatingBtn.classList.add('bounce');
+  }
 }
 
 function updateDishCartBadges() {
@@ -669,6 +676,17 @@ function renderCart() {
   if (cartCountEl) cartCountEl.textContent = count;
   if (cartTotalEl) cartTotalEl.textContent = formatMoney(total);
   if (placeOrderBtn) placeOrderBtn.disabled = !cartItems.length || !customerToken;
+
+  const floatingBadge = document.getElementById('floatingCartBadge');
+  if (floatingBadge) floatingBadge.textContent = count;
+  const floatingBtn = document.getElementById('floatingCartBtn');
+  if (floatingBtn) {
+    if (count > 0) {
+      floatingBtn.classList.add('has-items');
+    } else {
+      floatingBtn.classList.remove('has-items');
+    }
+  }
 
   updateDishCartBadges();
 
@@ -771,4 +789,14 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   const placeOrderBtn = document.getElementById('placeOrder');
   if (placeOrderBtn) placeOrderBtn.addEventListener('click', submitOrder);
+
+  const floatingBtn = document.getElementById('floatingCartBtn');
+  if (floatingBtn) {
+    floatingBtn.addEventListener('click', () => {
+      const cartPanel = document.querySelector('.cart-panel') || document.getElementById('cartList');
+      if (cartPanel) {
+        cartPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 });
