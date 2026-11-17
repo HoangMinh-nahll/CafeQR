@@ -93,26 +93,26 @@
   FALLBACK_SNACK_IMG: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none"><rect width="160" height="160" rx="20" fill="%23fdf5eb"/><circle cx="80" cy="80" r="48" fill="%23f0dfc8"/><path d="M52 90c0-16 12-28 28-28s28 12 28 28H52z" fill="%23d49354"/><circle cx="70" cy="80" r="3" fill="%233d2314"/><circle cx="90" cy="80" r="3" fill="%233d2314"/><circle cx="80" cy="72" r="3" fill="%233d2314"/></svg>',
 
   DEFAULT_DRINK_IMAGES: {
-    'bac-xiu': '/images/drinks/bac-xiu.jpg?v=20261117_v13',
-    'ca-phe-sua-da': '/images/drinks/ca-phe-sua-da.jpg?v=20261117_v13',
-    'ca-phe-den-da': '/images/drinks/ca-phe-den-da.jpg?v=20261117_v13',
-    'ca-phe-muoi': '/images/drinks/ca-phe-muoi.jpg?v=20261117_v13',
-    'tra-sua': '/images/drinks/tra-sua.jpg?v=20261117_v13',
-    'tra-sua-thai-xanh': '/images/drinks/tra-sua-thai-xanh.jpg?v=20261117_v13',
-    'tra-sua-o-long-trung-nuong': '/images/drinks/tra-sua-o-long-trung-nuong.jpg?v=20261117_v13',
-    'tra-sua-truyen-thong': '/images/drinks/tra-sua-truyen-thong.jpg?v=20261117_v13',
-    'tra-sua-dua-nuong': '/images/drinks/tra-sua-dua-nuong.jpg?v=20261117_v13',
-    'tra-dao': '/images/drinks/tra-dao.jpg?v=20261117_v13',
-    'tra-luu': '/images/drinks/tra-luu.jpg?v=20261117_v13',
-    'tra-mang-cau': '/images/drinks/tra-mang-cau.jpg?v=20261117_v13',
-    'tra-nhiet-doi': '/images/drinks/tra-nhiet-doi.jpg?v=20261117_v13',
-    'tra-da-me': '/images/drinks/tra-da-me.jpg?v=20261117_v13',
-    'tra-tac': '/images/drinks/tra-tac.jpg?v=20261117_v13',
-    'tra-oi-hong': '/images/drinks/tra-oi-hong.jpg?v=20261117_v13',
-    'tra-dau-tam': '/images/drinks/tra-dau-tam.jpg?v=20261117_v13',
-    'sua-chua-da-bao': '/images/drinks/sua-chua-da-bao.jpg?v=20261117_v13',
-    'sua-bap': '/images/drinks/sua-bap.jpg?v=20261117_v13',
-    'sua-dau-nanh': '/images/drinks/sua-dau-nanh.jpg?v=20261117_v13'
+    'bac-xiu': '/images/drinks/bac-xiu.jpg?v=20261117_v14',
+    'ca-phe-sua-da': '/images/drinks/ca-phe-sua-da.jpg?v=20261117_v14',
+    'ca-phe-den-da': '/images/drinks/ca-phe-den-da.jpg?v=20261117_v14',
+    'ca-phe-muoi': '/images/drinks/ca-phe-muoi.jpg?v=20261117_v14',
+    'tra-sua': '/images/drinks/tra-sua.jpg?v=20261117_v14',
+    'tra-sua-thai-xanh': '/images/drinks/tra-sua-thai-xanh.jpg?v=20261117_v14',
+    'tra-sua-o-long-trung-nuong': '/images/drinks/tra-sua-o-long-trung-nuong.jpg?v=20261117_v14',
+    'tra-sua-truyen-thong': '/images/drinks/tra-sua-truyen-thong.jpg?v=20261117_v14',
+    'tra-sua-dua-nuong': '/images/drinks/tra-sua-dua-nuong.jpg?v=20261117_v14',
+    'tra-dao': '/images/drinks/tra-dao.jpg?v=20261117_v14',
+    'tra-luu': '/images/drinks/tra-luu.jpg?v=20261117_v14',
+    'tra-mang-cau': '/images/drinks/tra-mang-cau.jpg?v=20261117_v14',
+    'tra-nhiet-doi': '/images/drinks/tra-nhiet-doi.jpg?v=20261117_v14',
+    'tra-da-me': '/images/drinks/tra-da-me.jpg?v=20261117_v14',
+    'tra-tac': '/images/drinks/tra-tac.jpg?v=20261117_v14',
+    'tra-oi-hong': '/images/drinks/tra-oi-hong.jpg?v=20261117_v14',
+    'tra-dau-tam': '/images/drinks/tra-dau-tam.jpg?v=20261117_v14',
+    'sua-chua-da-bao': '/images/drinks/sua-chua-da-bao.jpg?v=20261117_v14',
+    'sua-bap': '/images/drinks/sua-bap.jpg?v=20261117_v14',
+    'sua-dau-nanh': '/images/drinks/sua-dau-nanh.jpg?v=20261117_v14'
   },
 
   getItemImage(item) {
@@ -153,7 +153,7 @@
       return this.DEFAULT_DRINK_IMAGES['sua-bap'];
     }
     if (item.categoryName === 'Snacks' || (item.categoryName && item.categoryName.toLowerCase().includes('snack')) || slug.includes('snack') || slug.includes('khoai') || slug.includes('banh') || slug.includes('heo-quay')) {
-      return '/images/imgsFood/images.jpg?v=20261117_v13';
+      return '/images/imgsFood/images.jpg?v=20261117_v14';
     }
     return this.FALLBACK_DRINK_IMG;
   },
